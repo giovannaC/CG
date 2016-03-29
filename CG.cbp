@@ -42,6 +42,9 @@
 			<Add library="gdi32" />
 			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/lib" />
 		</Linker>
+		<Unit filename="ADGC.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="ADGL-DDA.c">
 			<Option compilerVar="CC" />
 		</Unit>

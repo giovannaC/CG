@@ -34,7 +34,9 @@ void ER(int x1, int y1, int x2, int y2){
     for(i = xi; i<=xii; i++){
         yf = (m * i) + b;
         yi = round(yf);
-        glVertex2f(i,yi);
+        glBegin(GL_POINTS);
+            glVertex2f(i,yi);
+        glEnd();
     }
 }
 // Digital Diferential Analyzer

@@ -1,13 +1,20 @@
-/* Giovanna Cazelato Pires ra: 141151171
+/* Giovanna Cazelato Pires RA: 141151171
    Algoritimos de Geração de Linha:
    - Equação da Reta.
    - DDA.
    - BRESENHAM.
+    Algoritimos de Geração de Circunferencia:
+   - BRESENHAM.
+----------------------------------------------
+   Não consegui fazer o programa rodar do modo
+esperado(gerando gráficos), mas está executando
+sem nenhum erro ou warning.
 */
-
+#include<windows.h>
 #include <stdio.h>
 #include <math.h>
 #include <GL/glut.h>
+#include <gl/gl.h>
 
 //Equação da Reta
 void ER(int x1, int y1, int x2, int y2){
@@ -56,12 +63,12 @@ void DDA(int x1, int y1, int x2, int y2){
     y_inc = dy/inter;
     x = x1;
     y = y1;
-    SetPixel(round(x),round(y));
+    SetPixel(NULL,round(x),round(y),RGB(220,20,60));
 
     for(i=1; i<inter; i++){
         x = x + x_inc;
         y = y + y_inc;
-        SetPixel(round(x),round(y));
+        SetPixel(NULL,round(x),round(y),RGB(220,20,60));
     }
 }
 // Bresenham para Linhas
@@ -83,7 +90,7 @@ void BRESENHAM_L(int x1, int y1, int x2, int y2){
         y = y1;
         xFinal = x2;
     }
-    SetPixel(x, y);
+    SetPixel(NULL,x, y,RGB(220,20,60));
     while(x < xFinal){
         x = x + 1;
         if(d < 0){
@@ -92,7 +99,25 @@ void BRESENHAM_L(int x1, int y1, int x2, int y2){
             y = y + 1;
             d = d + const2;
         }
-        SetPixel(x, y);
+        SetPixel(NULL,x, y,RGB(220,20,60));
+    }
+}
+//Bresenham para cirunferencias
+void BRESENHAM_C(int xCentro, int yCentro, int raio){
+    int x, y, d;
+    x = 0;
+    y = raio;
+    d = 1 - raio;
+    plotaPontosCicunferencia(xCentro, yCentro, x, y);
+    while(x < y){
+        if(d<0){
+            d = d + 2 * x + 3;
+        }else{
+            d = d + 2 * (x - y) + 5;
+            y = y - 1;
+        }
+    x = x + 1;
+    plotaPontosCicunferencia(xCentro, yCentro, x, y);
     }
 }
 // Ler o x1, y1, x2, y2
@@ -115,4 +140,24 @@ int menu(){
     printf("0. Sair\n");
     scanf("%d",&op);
         return op;
+}
+
+int main(int argc, char *argv[]){
+    int x1, x2, y1, y2, op;
+    readxy(x1,y1,x2,y2);
+    while(op > 0){
+        op = menu();
+        switch(op){
+            case 1:
+                ER(x1,y1,x2,y2);
+                    break;
+            case 2:
+                DDA(x1,y1,x2,y2);
+                    break;
+            case 3:
+                BRESENHAM_L(x1,y1,x2,y2);
+                    break;
+        }
+    }
+    return 0;
 }

@@ -12,9 +12,16 @@ sem nenhum erro ou warning.
 */
 #include<windows.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 #include <GL/glut.h>
 #include <gl/gl.h>
+#define TRUE 1
+int window;
+int Width;
+int Height;
+
+
 
 //Equação da Reta
 void ER(int x1, int y1, int x2, int y2){
@@ -103,7 +110,7 @@ void BRESENHAM_L(int x1, int y1, int x2, int y2){
     }
 }
 //Bresenham para cirunferencias
-void BRESENHAM_C(int xCentro, int yCentro, int raio){
+/*void BRESENHAM_C(int xCentro, int yCentro, int raio){
     int x, y, d;
     x = 0;
     y = raio;
@@ -119,7 +126,7 @@ void BRESENHAM_C(int xCentro, int yCentro, int raio){
     x = x + 1;
     plotaPontosCicunferencia(xCentro, yCentro, x, y);
     }
-}
+}*/
 // Ler o x1, y1, x2, y2
 void readxy(int x1, int y1, int x2, int y2){
     printf("\nDigite o x1: ");
@@ -142,7 +149,36 @@ int menu(){
         return op;
 }
 
+//Inicialização de OpenGL
+int InitGL(GLvoid){
+    glShadeModel(GL_SMOOTH);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClearDepth(1.0f);
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+    return TRUE;
+}
+//Desenhar o mundo OpenGL
+void redesenhamundo(GLvoid){
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+    glLoadIdentity();
+    DDA(4,7,14,14);
+    glutSwapBuffers();
+
+}
+
 int main(int argc, char *argv[]){
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
+    glutInitWindowSize(640, 480); /* get a 640 x 480 window */
+    glutInitWindowPosition(0, 0);
+    window = glutCreateWindow("ine5341 Computação Gráfica UNESP");
+    //glutReshapeFunc(redimensionaJanela);
+    glutDisplayFunc(redesenhamundo);
+    InitGL();
+
     int x1, x2, y1, y2, op;
     readxy(x1,y1,x2,y2);
     while(op > 0){

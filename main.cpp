@@ -11,6 +11,7 @@
  * number of geometry stacks and slices can be adjusted
  * using the + and - keys.
  */
+#include <gl/gl.h>
 #include<windows.h>
 #ifdef __APPLE__
 #include <GLUT/glut.h>
@@ -135,6 +136,7 @@ const GLfloat high_shininess[] = { 100.0f };
 /* Program entry point */
 
 int main(int argc, char *argv[])
+
 {
     glutInit(&argc, argv);
     glutInitWindowSize(640,480);

@@ -52,7 +52,7 @@ void init(void){
 void display(void){
   glClear(GL_COLOR_BUFFER_BIT);               // limpa a janela
   glColor3f (0.0, 0.0, 0.0);                  // cor da linha
-  DDA(4,7,14,14);
+  DDA(4,7,100,100);
   glFlush();
 }
 
